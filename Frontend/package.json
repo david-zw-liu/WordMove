@@ -23,6 +23,7 @@
     "@types/jquery": "^1.10.31",
     "@types/lodash": "^4.14.34",
     "@types/moment": "^2.13.0",
+    "bootstrap": "^4.0.0-alpha.4",
     "core-js": "^2.4.0",
     "install": "^0.8.1",
     "jquery": "^2.2.4",
