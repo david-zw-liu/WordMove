@@ -15,6 +15,8 @@ import { InputArticleComponent } from './input-article/input-article.component';
 import { SelectAnimationComponent } from './select-animation/select-animation.component';
 import { ResultComponent } from './result/result.component';
 
+import { WordmoveService } from './wordmove.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,8 @@ import { ResultComponent } from './result/result.component';
     DatepickerModule
   ],
   providers: [
-    appRoutingProviders
+    appRoutingProviders,
+    WordmoveService
   ],
   bootstrap: [AppComponent]
 })

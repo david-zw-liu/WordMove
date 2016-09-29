@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'input-article', component: InputArticleComponent },
   { path: 'select-animation', component: SelectAnimationComponent },
   { path: 'result', component: ResultComponent },
+  { path: 'result/:id', component: ResultComponent },
 ];
 
 export const appRoutingProviders: any[] = [
