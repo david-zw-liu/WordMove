@@ -18,4 +18,18 @@ export class WordmoveService {
     };
     return this.http.post(url, body, options).map(rsp => rsp.json());
   }
+  saveResult() {
+    let url = this.apiUrl + 'result';
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    let body = {
+      data: this.processedResult
+    };
+    return this.http.post(url, body, options).map(rsp => rsp.json());
+  }
+
+  getResult(id) {
+    let url = this.apiUrl + 'result/'+id;
+    return this.http.get(url);
+  }
 }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160925203726) do
+ActiveRecord::Schema.define(version: 20161002000958) do
 
   create_table "gifs", force: :cascade do |t|
     t.string   "url"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(version: 20160925203726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["word_id"], name: "index_gifs_on_word_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.string   "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "words", force: :cascade do |t|

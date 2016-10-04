@@ -7,14 +7,14 @@
 <div class="row" id="content">
   <div class="col-xs flex-xs-middle">
     <p>
-      <span *ngFor="let item of processedResult" [class]="item.tag" [ngClass]="{selectedWord: item == currentSection, done: item.selectedImgIndex != undefined}" (click)="clickChange(item)">{{item.sentence}}</span>
+      <span *ngFor="let item of processedResult" [class]="item.tag" [ngClass]="{selectedWord: item == currentSection, done: item.selectedImgIndex != undefined, notSelected: (item.selectable && item.selectedImgIndex == undefined && item.recommend_index == null)}" (click)="clickChange(item)">{{item.sentence}}</span>
     </p>
   </div>
 </div>
 
 <div class="row" id="image-options">
   <div class="col-xs" *ngFor="let img of currentSection.images;let i = index">
-    <img [ngClass]="{selected: currentSection.selectedImgIndex == i }" (click) = "currentSection.selectedImgIndex = i" [src]="img" class="img-fluid">
+    <img [ngClass]="{selected: currentSection.selectedImgIndex == i, recommendWord: currentSection.recommend_index == i }" (click) = "currentSection.selectedImgIndex = i" [src]="img" class="img-fluid">
   </div>
 
 </div>

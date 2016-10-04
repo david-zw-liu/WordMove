@@ -64,13 +64,20 @@ class WordMoveService
   def word_to_gif
     puts '搜圖中...'
 
-    # @TODO: Load from DB
-
     @word_to_gifs = {}
+    @word_to_recommend_index = {}
 
     @tags.each_with_index do |t, i|
       if need_words? t
-        @word_to_gifs[@words[i].to_sym] = Giphy.search(@en_words[i], limit: 5).map{|g| g.fixed_height_image.url.to_s }
+        word = Word.find_by(zh_word: @words[i])
+        if word.nil?
+          @word_to_gifs[@words[i].to_sym] = Giphy.search(@en_words[i], limit: 5).map{|g| g.fixed_height_image.url.to_s }
+        else
+          @word_to_gifs[@words[i].to_sym] = word.gifs.map { |g| g.url }
+          if word.gifs.map{|g| g.count}.each_with_index.max[0] > 0
+            @word_to_recommend_index[@words[i].to_sym] = word.gifs.map{|g| g.count}.each_with_index.max[1]
+          end
+        end
       end
     end
   end
@@ -86,19 +93,20 @@ class WordMoveService
 
     no_images_string = ""
     @words.each_with_index do |w, i|
-      if need_words? @tags[i]
+      if need_words? @tags[i] || @word_to_gifs[w.to_sym].count != 0
         if(!no_images_string.empty?)
-          @result << { sentence: no_images_string, en_sentence: nil, tag: nil, images: [], selectable: false , sound: nil }
+          @result << { sentence: no_images_string, recommend_index: nil, en_sentence: nil, tag: nil, images: [], selectable: false , sound: nil }
           no_images_string = ""
         end
-        @result << { sentence: w, en_sentence: @en_words[i], tag: @tags[i], images: @word_to_gifs[w.to_sym], selectable: true , sound: nil }
+        @result << { sentence: w, en_sentence: @en_words[i], tag: @tags[i], images: @word_to_gifs[w.to_sym],
+                     recommend_index: (@word_to_recommend_index[w.to_sym] rescue nil), selectable: true , sound: nil }
       else
         no_images_string << w
       end
     end
 
     if(!no_images_string.empty?)
-      @result << { sentence: no_images_string, en_sentence: nil, tag: nil, images: [], selectable: false , sound: nil }
+      @result << { sentence: no_images_string, recommend_index: nil, en_sentence: nil, tag: nil, images: [], selectable: false , sound: nil }
     end
   end
 
@@ -120,20 +128,14 @@ class WordMoveService
       end
     end
 
-
     @result.each do |r|
       word = Word.find_by(zh_word: r[:sentence])
-
       if !word
-
         w = Word.new
-
         w.zh_word = r[:sentence]
         w.en_word = r[:en_sentence]
         w.sound_path = r[:sound]
-
         w.save
-
         r[:images].each do |url|
           w.gifs.create(url: url, count: 0)
         end

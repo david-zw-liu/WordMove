@@ -13,7 +13,7 @@ export class InputArticleComponent implements OnInit {
   constructor(private router: Router, private ws: WordmoveService) {
   }
 
-  public article = "兔子嘲笑烏龜的步子爬的慢，但是他笑了，說總有一天他會和她賽跑，並且贏他。";
+  public article = "獅子和熊在各自的蘋果樹下堆肥，經過了幾月，熊看到成熟的蘋果，但是卻生長在獅子家的蘋果樹上，感嘆地說：「獅屎勝於熊便！」";
 
   ngOnInit() {}
 

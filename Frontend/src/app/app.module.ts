@@ -16,6 +16,10 @@ import { SelectAnimationComponent } from './select-animation/select-animation.co
 import { ResultComponent } from './result/result.component';
 
 import { WordmoveService } from './wordmove.service';
+import {
+  LocationStrategy,
+  HashLocationStrategy
+} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { WordmoveService } from './wordmove.service';
   ],
   providers: [
     appRoutingProviders,
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     WordmoveService
   ],
   bootstrap: [AppComponent]

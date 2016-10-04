@@ -66,7 +66,7 @@ export class SelectAnimationComponent implements OnInit {
   isAllSelected() {
     for(let i = 0; i < this.hasImgSection.length; i++) {
       let s = this.hasImgSection[i];
-      if(typeof s.selectedImgIndex == 'undefined'){
+      if(typeof s.selectedImgIndex == 'undefined' && s['recommend_index'] == null){
         return false;
       }
     }
